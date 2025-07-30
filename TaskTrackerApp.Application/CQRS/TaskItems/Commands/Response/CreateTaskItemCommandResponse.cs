@@ -2,5 +2,5 @@
 
 public sealed record CreateTaskItemCommandResponse(
     bool IsSuccess,
-    Guid TaskItemId
+    Guid Id
 );

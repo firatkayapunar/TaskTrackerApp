@@ -3,11 +3,11 @@ using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.Domain.Entities;
 
-public class TaskItem : AuditableEntity
+public class TaskItem : FullAuditableEntity
 {
     public string Title { get; set; } = default!;
     public string? Description { get; set; }
-    public DateTime DueDate { get; set; }
+    public DateTime? DueDate { get; set; }
     public bool IsCompleted { get; set; }
 
     public TaskItemState State { get; set; } = TaskItemState.NotStarted;

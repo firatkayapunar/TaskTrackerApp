@@ -1,4 +1,5 @@
-﻿using TaskTrackerApp.Domain.Entities;
+﻿using TaskTrackerApp.Domain.Auditing.BaseClasses;
+using TaskTrackerApp.Domain.Entities;
 using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.Application.Repositories;
