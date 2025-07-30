@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.Domain", "Ta
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.Application", "TaskTrackerApp.Application\TaskTrackerApp.Application.csproj", "{B46D3EBA-61DE-472D-8C8E-62EF8F8B9D83}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.Infrastructure", "TaskTrackerApp.Infrastructure\TaskTrackerApp.Infrastructure.csproj", "{AD0A6224-E63A-410E-9A7B-D9B5333FF76F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{B46D3EBA-61DE-472D-8C8E-62EF8F8B9D83}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B46D3EBA-61DE-472D-8C8E-62EF8F8B9D83}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B46D3EBA-61DE-472D-8C8E-62EF8F8B9D83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD0A6224-E63A-410E-9A7B-D9B5333FF76F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD0A6224-E63A-410E-9A7B-D9B5333FF76F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD0A6224-E63A-410E-9A7B-D9B5333FF76F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD0A6224-E63A-410E-9A7B-D9B5333FF76F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

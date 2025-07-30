@@ -33,7 +33,7 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, 
         if (!_passwordHasher.Verify(request.Password, user.PasswordHash))
             return ServiceResult<LoginUserCommandResponse>.Fail(ResultCode.Unauthorized, "Invalid credentials");
 
-        var token = _jwtTokenService.GenerateToken(user.Id, user.Username, user.Email);
+        var token = _jwtTokenService.GenerateToken(user);
 
         var response = new LoginUserCommandResponse(token, user.Email, user.Username);
         return ServiceResult<LoginUserCommandResponse>.Success(response);

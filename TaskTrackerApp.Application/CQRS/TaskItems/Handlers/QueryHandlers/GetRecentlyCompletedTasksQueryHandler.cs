@@ -10,10 +10,10 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.QueryHandlers;
 public sealed class GetRecentlyCompletedTasksQueryHandler
     : IRequestHandler<GetRecentlyCompletedTasksQueryRequest, ServiceResult<List<GetRecentlyCompletedTasksQueryResponse>>>
 {
-    private readonly ITaskRepository _taskRepository;
+    private readonly ITaskItemRepository _taskRepository;
     private readonly IMapper _mapper;
 
-    public GetRecentlyCompletedTasksQueryHandler(ITaskRepository taskRepository, IMapper mapper)
+    public GetRecentlyCompletedTasksQueryHandler(ITaskItemRepository taskRepository, IMapper mapper)
     {
         _taskRepository = taskRepository;
         _mapper = mapper;

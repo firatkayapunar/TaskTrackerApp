@@ -1,6 +1,6 @@
 ﻿namespace TaskTrackerApp.Domain.Enums;
 
-public enum TaskState
+public enum TaskItemState
 {
     NotStarted = 0,
     InProgress = 1,

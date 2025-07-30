@@ -5,5 +5,5 @@ using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.Application.CQRS.TaskItems.Queries.Request;
 
-public sealed record GetTasksByStateQueryRequest(TaskState State)
+public sealed record GetTasksByStateQueryRequest(TaskItemState State)
     : IRequest<ServiceResult<List<GetTasksByStateQueryResponse>>>;

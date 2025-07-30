@@ -10,10 +10,10 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.QueryHandlers;
 public sealed class GetAllTasksQueryHandler
     : IRequestHandler<GetAllTasksQueryRequest, ServiceResult<List<GetAllTasksQueryResponse>>>
 {
-    private readonly ITaskRepository _taskRepository;
+    private readonly ITaskItemRepository _taskRepository;
     private readonly IMapper _mapper;
 
-    public GetAllTasksQueryHandler(ITaskRepository taskRepository, IMapper mapper)
+    public GetAllTasksQueryHandler(ITaskItemRepository taskRepository, IMapper mapper)
     {
         _taskRepository = taskRepository;
         _mapper = mapper;
