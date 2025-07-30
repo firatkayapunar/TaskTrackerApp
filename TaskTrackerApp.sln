@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.WebAPI", "TaskTrackerApp.WebAPI\TaskTrackerApp.WebAPI.csproj", "{CDA1A7DC-6911-45BE-A10D-BB090A6CA749}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TaskTrackerApp.Tests", "TaskTrackerApp.Tests\TaskTrackerApp.Tests.csproj", "{273A710A-DD2B-4EC1-BBAB-EDF2922FF138}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{CDA1A7DC-6911-45BE-A10D-BB090A6CA749}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CDA1A7DC-6911-45BE-A10D-BB090A6CA749}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CDA1A7DC-6911-45BE-A10D-BB090A6CA749}.Release|Any CPU.Build.0 = Release|Any CPU
+		{273A710A-DD2B-4EC1-BBAB-EDF2922FF138}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{273A710A-DD2B-4EC1-BBAB-EDF2922FF138}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{273A710A-DD2B-4EC1-BBAB-EDF2922FF138}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{273A710A-DD2B-4EC1-BBAB-EDF2922FF138}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
