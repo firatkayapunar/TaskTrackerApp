@@ -2,7 +2,9 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskTrackerApp.Application.Common.Interfaces;
+using TaskTrackerApp.Application.Common.Marker;
 using TaskTrackerApp.Application.Repositories;
+using TaskTrackerApp.Domain.Auditing.BaseClasses;
 using TaskTrackerApp.Infrastructure.Auth;
 using TaskTrackerApp.Infrastructure.Common.Marker;
 using TaskTrackerApp.Infrastructure.Persistence;
@@ -13,7 +15,7 @@ namespace TaskTrackerApp.Infrastructure.Common.Extensions;
 
 public static class InfrastructureExtensions
 {
-    public static IServiceCollection AddRepositories(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services.AddHttpContextAccessor();
 
@@ -40,7 +42,8 @@ public static class InfrastructureExtensions
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<IJwtTokenService, JwtTokenService>();
-        
+        services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+
         return services;
     }
 }

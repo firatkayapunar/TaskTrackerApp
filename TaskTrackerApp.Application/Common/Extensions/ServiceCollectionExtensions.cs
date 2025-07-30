@@ -6,7 +6,7 @@ using TaskTrackerApp.Application.Common.Marker;
 
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddServices(this IServiceCollection services)
+    public static IServiceCollection AddApplications(this IServiceCollection services)
     {
         services.AddValidatorsFromAssemblyContaining<ApplicationAssemblyMarker>();
 
@@ -15,6 +15,8 @@ public static class ServiceCollectionExtensions
             cfg.AddProfile<TaskItemMappingProfile>();
             cfg.AddProfile<UserMappingProfile>();
         });
+
+        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ApplicationAssemblyMarker).Assembly));
 
         return services;
     }

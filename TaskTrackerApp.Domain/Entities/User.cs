@@ -2,7 +2,7 @@
 
 namespace TaskTrackerApp.Domain.Entities;
 
-public class User : FullAuditableEntity
+public class User : AuditableEntity
 {
     public string FirstName { get; set; } = default!;
     public string LastName { get; set; } = default!;

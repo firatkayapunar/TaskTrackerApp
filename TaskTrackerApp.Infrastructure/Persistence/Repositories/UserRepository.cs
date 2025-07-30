@@ -19,4 +19,11 @@ public class UserRepository : GenericRepository<User>, IUserRepository
             .AsNoTracking()
             .FirstOrDefaultAsync(u => u.Email.ToLower() == email.ToLower());
     }
+
+    public Task<List<User>> GetAllUsersAsync()
+    {
+        return _context.Users
+            .AsNoTracking()
+            .ToListAsync();
+    }
 }
