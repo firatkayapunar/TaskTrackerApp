@@ -1,6 +1,8 @@
-﻿namespace TaskTrackerApp.Application.Common.Interfaces;
+﻿using TaskTrackerApp.Domain.Entities;
+
+namespace TaskTrackerApp.Application.Common.Interfaces;
 
 public interface IJwtTokenService
 {
-    string GenerateToken(Guid userId, string username, string email);
+    string GenerateToken(User user);
 }

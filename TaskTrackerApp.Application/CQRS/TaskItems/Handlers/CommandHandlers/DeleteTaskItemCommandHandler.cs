@@ -9,9 +9,9 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.CommandHandlers;
 public sealed class DeleteTaskItemCommandHandler
     : IRequestHandler<DeleteTaskItemCommandRequest, ServiceResult<DeleteTaskItemCommandResponse>>
 {
-    private readonly ITaskRepository _taskRepository;
+    private readonly ITaskItemRepository _taskRepository;
 
-    public DeleteTaskItemCommandHandler(ITaskRepository taskRepository)
+    public DeleteTaskItemCommandHandler(ITaskItemRepository taskRepository)
     {
         _taskRepository = taskRepository;
     }

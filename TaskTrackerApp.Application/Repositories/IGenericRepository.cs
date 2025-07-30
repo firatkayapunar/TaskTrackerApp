@@ -1,7 +1,7 @@
 ﻿using System.Linq.Expressions;
 using TaskTrackerApp.Domain.Common;
 
-namespace TaskTrackerApp.Domain.Auditing.BaseClasses;
+namespace TaskTrackerApp.Application.Repositories;
 
 public interface IGenericRepository<T> where T : BaseEntity
 {

@@ -10,7 +10,7 @@ public class TaskItem : AuditableEntity
     public DateTime DueDate { get; set; }
     public bool IsCompleted { get; set; }
 
-    public TaskState State { get; set; } = TaskState.NotStarted;
+    public TaskItemState State { get; set; } = TaskItemState.NotStarted;
 
     public Guid UserId { get; set; }
     public User User { get; set; } = default!;

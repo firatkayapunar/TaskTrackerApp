@@ -10,11 +10,11 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.CommandHandlers;
 
 public sealed class CreateTaskItemCommandHandler : IRequestHandler<CreateTaskItemCommandRequest, ServiceResult<CreateTaskItemCommandResponse>>
 {
-    private readonly ITaskRepository _taskRepository;
+    private readonly ITaskItemRepository _taskRepository;
     private readonly IUserRepository _userRepository;
     private readonly IMapper _mapper;
 
-    public CreateTaskItemCommandHandler(ITaskRepository taskRepository, IUserRepository userRepository, IMapper mapper)
+    public CreateTaskItemCommandHandler(ITaskItemRepository taskRepository, IUserRepository userRepository, IMapper mapper)
     {
         _taskRepository = taskRepository;
         _userRepository = userRepository;

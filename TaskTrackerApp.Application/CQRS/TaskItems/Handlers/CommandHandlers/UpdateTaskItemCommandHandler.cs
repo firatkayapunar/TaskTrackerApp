@@ -9,10 +9,10 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.CommandHandlers;
 
 public sealed class UpdateTaskItemCommandHandler : IRequestHandler<UpdateTaskItemCommandRequest, ServiceResult<UpdateTaskItemCommandResponse>>
 {
-    private readonly ITaskRepository _taskRepository;
+    private readonly ITaskItemRepository _taskRepository;
     private readonly IMapper _mapper;
 
-    public UpdateTaskItemCommandHandler(ITaskRepository taskRepository, IMapper mapper)
+    public UpdateTaskItemCommandHandler(ITaskItemRepository taskRepository, IMapper mapper)
     {
         _taskRepository = taskRepository;
         _mapper = mapper;
