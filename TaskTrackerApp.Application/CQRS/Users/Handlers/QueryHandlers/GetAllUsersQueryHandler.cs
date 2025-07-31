@@ -7,17 +7,11 @@ using TaskTrackerApp.CQRS.Users.Queries.Response;
 
 namespace TaskTrackerApp.CQRS.Users.Handlers.QueryHandlers;
 
-public sealed class GetAllUsersQueryHandler
-    : IRequestHandler<GetAllUsersQueryRequest, ServiceResult<List<GetAllUsersQueryResponse>>>
+public sealed class GetAllUsersQueryHandler(IUserRepository userRepository, IMapper mapper)
+        : IRequestHandler<GetAllUsersQueryRequest, ServiceResult<List<GetAllUsersQueryResponse>>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-
-    public GetAllUsersQueryHandler(IUserRepository userRepository, IMapper mapper)
-    {
-        _userRepository = userRepository;
-        _mapper = mapper;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<ServiceResult<List<GetAllUsersQueryResponse>>> Handle(
         GetAllUsersQueryRequest request,

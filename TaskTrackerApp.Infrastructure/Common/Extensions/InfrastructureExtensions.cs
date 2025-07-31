@@ -2,9 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using TaskTrackerApp.Application.Common.Interfaces;
-using TaskTrackerApp.Application.Common.Marker;
 using TaskTrackerApp.Application.Repositories;
-using TaskTrackerApp.Domain.Auditing.BaseClasses;
 using TaskTrackerApp.Infrastructure.Auth;
 using TaskTrackerApp.Infrastructure.Common.Marker;
 using TaskTrackerApp.Infrastructure.Persistence;
@@ -37,12 +35,16 @@ public static class InfrastructureExtensions
         });
 
         services.AddScoped<ITaskItemRepository, TaskItemRepository>();
+
         services.AddScoped<IUserRepository, UserRepository>();
 
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+
         services.AddScoped<IPasswordHasher, BcryptPasswordHasher>();
+
+        services.AddScoped<IUnitOfWork, UnitOfWork>();
 
         return services;
     }

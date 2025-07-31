@@ -18,21 +18,15 @@ public class TaskItemMappingProfile : Profile
 
         CreateMap<UpdateTaskItemCommandRequest, TaskItem>()
             .ForMember(dest => dest.Id, opt => opt.Ignore())
+            .ForMember(dest => dest.DueDate, opt => opt.Ignore())
             .ForMember(dest => dest.UserId, opt => opt.Ignore());
 
-        CreateMap<TaskItem, GetTaskItemByIdQueryResponse>()
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
+        CreateMap<TaskItem, GetTaskItemByIdQueryResponse>();
 
-        CreateMap<TaskItem, GetAllTasksQueryResponse>()
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
+        CreateMap<TaskItem, GetAllTasksQueryResponse>();
 
-        CreateMap<TaskItem, GetTasksByUserIdQueryResponse>()
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
+        CreateMap<TaskItem, GetTasksByUserIdQueryResponse>();
 
-        CreateMap<TaskItem, GetTasksByStateQueryResponse>()
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
-
-        CreateMap<TaskItem, GetRecentlyCompletedTasksQueryResponse>()
-            .ForMember(dest => dest.State, opt => opt.MapFrom(src => src.State.ToString()));
+        CreateMap<TaskItem, GetRecentlyCompletedTasksQueryResponse>();
     }
 }

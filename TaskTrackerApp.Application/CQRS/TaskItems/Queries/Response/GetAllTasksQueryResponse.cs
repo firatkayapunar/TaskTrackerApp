@@ -4,6 +4,7 @@ public sealed record GetAllTasksQueryResponse(
     Guid Id,
     string Title,
     string? Description,
-    string State,
+    DateTime? DueDate,
+    bool IsCompleted,
     DateTime CreatedAt
 );

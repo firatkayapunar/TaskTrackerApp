@@ -6,10 +6,8 @@ public abstract class BaseServiceResult
 {
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingDefault)]
     public List<string> Errors { get; init; } = new();
-
     [JsonIgnore]
     public ResultCode ResultCode { get; init; }
-
     [JsonIgnore]
     public bool IsSuccess => ResultCode == ResultCode.Success;
 }

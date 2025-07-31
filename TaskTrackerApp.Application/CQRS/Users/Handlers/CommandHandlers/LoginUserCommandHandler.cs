@@ -7,21 +7,14 @@ using TaskTrackerApp.CQRS.Users.Commands.Response;
 
 namespace TaskTrackerApp.CQRS.Users.Handlers.CommandHandlers;
 
-public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, ServiceResult<LoginUserCommandResponse>>
+public class LoginUserCommandHandler(
+        IUserRepository userRepository,
+        IJwtTokenService jwtTokenService,
+        IPasswordHasher passwordHasher) : IRequestHandler<LoginUserCommandRequest, ServiceResult<LoginUserCommandResponse>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IJwtTokenService _jwtTokenService;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public LoginUserCommandHandler(
-            IUserRepository userRepository,
-            IJwtTokenService jwtTokenService,
-            IPasswordHasher passwordHasher)
-    {
-        _userRepository = userRepository;
-        _jwtTokenService = jwtTokenService;
-        _passwordHasher = passwordHasher;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IJwtTokenService _jwtTokenService = jwtTokenService;
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
 
     public async Task<ServiceResult<LoginUserCommandResponse>> Handle(LoginUserCommandRequest request, CancellationToken cancellationToken)
     {
@@ -35,8 +28,8 @@ public class LoginUserCommandHandler : IRequestHandler<LoginUserCommandRequest, 
 
         var token = _jwtTokenService.GenerateToken(user);
 
-        var response = new LoginUserCommandResponse(token, user.Email, user.Username);
+        var response = new LoginUserCommandResponse(token, user.Email, user.Username, user.Role,user.Id);
+
         return ServiceResult<LoginUserCommandResponse>.Success(response);
     }
 }
- 

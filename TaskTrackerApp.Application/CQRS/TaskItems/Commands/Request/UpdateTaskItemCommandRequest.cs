@@ -8,6 +8,5 @@ public sealed record UpdateTaskItemCommandRequest(
     Guid Id,
     string Title,
     string? Description,
-    DateTime DueDate,
     bool IsCompleted
 ) : IRequest<ServiceResult<UpdateTaskItemCommandResponse>>;

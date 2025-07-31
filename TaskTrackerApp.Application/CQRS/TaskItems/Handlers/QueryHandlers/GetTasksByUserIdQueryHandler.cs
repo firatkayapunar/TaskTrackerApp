@@ -7,17 +7,11 @@ using TaskTrackerApp.Application.Repositories;
 
 namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.QueryHandlers;
 
-public sealed class GetTasksByUserIdQueryHandler
-    : IRequestHandler<GetTasksByUserIdQueryRequest, ServiceResult<List<GetTasksByUserIdQueryResponse>>>
+public sealed class GetTasksByUserIdQueryHandler(ITaskItemRepository taskRepository, IMapper mapper)
+        : IRequestHandler<GetTasksByUserIdQueryRequest, ServiceResult<List<GetTasksByUserIdQueryResponse>>>
 {
-    private readonly ITaskItemRepository _taskRepository;
-    private readonly IMapper _mapper;
-
-    public GetTasksByUserIdQueryHandler(ITaskItemRepository taskRepository, IMapper mapper)
-    {
-        _taskRepository = taskRepository;
-        _mapper = mapper;
-    }
+    private readonly ITaskItemRepository _taskRepository = taskRepository;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<ServiceResult<List<GetTasksByUserIdQueryResponse>>> Handle(
         GetTasksByUserIdQueryRequest request,

@@ -7,17 +7,11 @@ using TaskTrackerApp.CQRS.Users.Queries.Response;
 
 namespace TaskTrackerApp.CQRS.Users.Handlers.QueryHandlers;
 
-public sealed class GetUserByEmailQueryHandler
-    : IRequestHandler<GetUserByEmailQueryRequest, ServiceResult<GetUserByEmailQueryResponse>>
+public sealed class GetUserByEmailQueryHandler(IUserRepository userRepository, IMapper mapper)
+        : IRequestHandler<GetUserByEmailQueryRequest, ServiceResult<GetUserByEmailQueryResponse>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-
-    public GetUserByEmailQueryHandler(IUserRepository userRepository, IMapper mapper)
-    {
-        _userRepository = userRepository;
-        _mapper = mapper;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
 
     public async Task<ServiceResult<GetUserByEmailQueryResponse>> Handle(
         GetUserByEmailQueryRequest request,

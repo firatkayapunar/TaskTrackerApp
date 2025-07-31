@@ -1,9 +1,7 @@
 ﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using TaskTrackerApp.Application.CQRS.TaskItems.Commands.Request;
 using TaskTrackerApp.Application.CQRS.TaskItems.Queries.Request;
-using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.WebAPI.Controllers;
 
@@ -25,10 +23,6 @@ public class TaskItemsController(IMediator mediator) : CustomBaseController
     public async Task<IActionResult> GetRecentlyCompletedAsync()
         => CreateActionResult(await mediator.Send(new GetRecentlyCompletedTasksQueryRequest()));
 
-    [HttpGet("by-state")]
-    public async Task<IActionResult> GetByStateAsync([FromQuery] TaskItemState state)
-        => CreateActionResult(await mediator.Send(new GetTasksByStateQueryRequest(state)));
-
     [HttpPost]
     public async Task<IActionResult> CreateAsync([FromBody] CreateTaskItemCommandRequest request)
     {
@@ -40,6 +34,9 @@ public class TaskItemsController(IMediator mediator) : CustomBaseController
 
         return CreateActionResult(result, locationUrl!);
     }
+
+    [HttpPatch("complete/{id}")]
+    public async Task<IActionResult> CompleteAsync(Guid id) => CreateActionResult(await mediator.Send(new CompleteTaskItemCommandRequest(id)));
 
     [HttpPut("{id:Guid}")]
     public async Task<IActionResult> UpdateAsync([FromRoute] Guid id, [FromBody] UpdateTaskItemCommandRequest request)

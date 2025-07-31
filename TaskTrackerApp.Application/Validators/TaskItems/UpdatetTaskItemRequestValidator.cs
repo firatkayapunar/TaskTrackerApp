@@ -17,8 +17,5 @@ public class UpdateTaskItemRequestValidator : AbstractValidator<UpdateTaskItemCo
         RuleFor(x => x.Description)
             .MaximumLength(500).WithMessage("Description must be at most 500 characters long.")
             .When(x => !string.IsNullOrWhiteSpace(x.Description));
-
-        RuleFor(x => x.DueDate)
-            .GreaterThan(DateTime.UtcNow).WithMessage("Due date must be in the future.");
     }
 }

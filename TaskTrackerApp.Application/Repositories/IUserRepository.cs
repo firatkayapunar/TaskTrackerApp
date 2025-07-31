@@ -1,5 +1,4 @@
-﻿using TaskTrackerApp.Domain.Auditing.BaseClasses;
-using TaskTrackerApp.Domain.Entities;
+﻿using TaskTrackerApp.Domain.Entities;
 
 namespace TaskTrackerApp.Application.Repositories;
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using TaskTrackerApp.Application.Common.Interfaces;
 using TaskTrackerApp.Application.Common.Results;
 using TaskTrackerApp.Application.CQRS.TaskItems.Commands.Request;
 using TaskTrackerApp.Application.CQRS.TaskItems.Commands.Response;
@@ -6,15 +7,11 @@ using TaskTrackerApp.Application.Repositories;
 
 namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.CommandHandlers;
 
-public sealed class DeleteTaskItemCommandHandler
-    : IRequestHandler<DeleteTaskItemCommandRequest, ServiceResult<DeleteTaskItemCommandResponse>>
+public sealed class DeleteTaskItemCommandHandler(ITaskItemRepository taskRepository, IUnitOfWork unitOfWork)
+        : IRequestHandler<DeleteTaskItemCommandRequest, ServiceResult<DeleteTaskItemCommandResponse>>
 {
-    private readonly ITaskItemRepository _taskRepository;
-
-    public DeleteTaskItemCommandHandler(ITaskItemRepository taskRepository)
-    {
-        _taskRepository = taskRepository;
-    }
+    private readonly ITaskItemRepository _taskRepository = taskRepository;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ServiceResult<DeleteTaskItemCommandResponse>> Handle(
         DeleteTaskItemCommandRequest request,
@@ -26,6 +23,7 @@ public sealed class DeleteTaskItemCommandHandler
             return ServiceResult<DeleteTaskItemCommandResponse>.Fail(ResultCode.NotFound, $"Task with ID '{request.TaskItemId}' not found.");
 
         _taskRepository.Delete(taskItem);
+        await _unitOfWork.SaveChangeAsync();
 
         var response = new DeleteTaskItemCommandResponse(true);
 

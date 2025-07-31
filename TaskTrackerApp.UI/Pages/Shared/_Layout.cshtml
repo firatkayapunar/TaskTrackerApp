@@ -1,0 +1,113 @@
+﻿@using Microsoft.AspNetCore.Http
+@using TaskTrackerApp.UI.Constants
+@using TaskTrackerApp.UI.ViewModels.Enums
+@{
+    var isLoggedIn = ViewContext.HttpContext.Session.Keys.Contains(SessionKeys.JwtToken);
+    var userEmail = ViewContext.HttpContext.Session.GetString(SessionKeys.Email);
+    var roleValue = ViewContext.HttpContext.Session.GetString(SessionKeys.UserRole);
+    var isAdmin = Enum.TryParse<UserRole>(roleValue, out var parsedRole) && parsedRole == UserRole.Admin;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Task Tracker</title>
+
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="~/lib/toastr.js/toastr.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container">
+                <a class="navbar-brand fw-bold text-primary" asp-page="/Index">Task Tracker</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent"
+                        aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarContent">
+                    <ul class="navbar-nav me-auto">
+                        @if (isLoggedIn)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link @(ViewContext.ActionDescriptor?.DisplayName?.Contains("TaskItems") == true ? "active fw-bold text-primary" : "text-dark")"
+                                   asp-page="/TaskItems/List">
+                                    <i class="fa fa-tasks me-1"></i>Tasks
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav">
+                        @if (isLoggedIn)
+                        {
+                            @if (!string.IsNullOrWhiteSpace(userEmail))
+                            {
+                                <li class="nav-item">
+                                    <span class="nav-link text-muted">
+                                        <i class="fa fa-user me-1" title="@userEmail"></i>Welcome, @userEmail
+                                    </span>
+                                </li>
+                            }
+
+                            @if (isAdmin)
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-success" asp-page="/Auth/Register">
+                                        <i class="fa fa-user-plus me-1"></i>Register
+                                    </a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link text-danger" asp-page="/Auth/Logout">
+                                    <i class="fa fa-sign-out-alt me-1"></i>Logout
+                                </a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-page="/Auth/Login">
+                                    <i class="fa fa-sign-in-alt me-1"></i>Login
+                                </a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted mt-5">
+        <div class="container">
+            &copy; @DateTime.Now.Year - Task Tracker
+        </div>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/toastr.js/toastr.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/js/site.js" asp-append-version="true"></script>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>toastr.success("@TempData["SuccessMessage"]");</script>
+    }
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>toastr.error("@TempData["ErrorMessage"]");</script>
+    }
+</body>
+</html>

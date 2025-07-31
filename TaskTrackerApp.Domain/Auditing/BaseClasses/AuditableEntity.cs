@@ -7,8 +7,7 @@ public abstract class AuditableEntity : BaseEntity, IAuditable
 {
     public DateTime CreatedAt { get; set; }
     public string CreatedBy { get; set; } = "System";
-
     public DateTime? UpdatedAt { get; set; }
     public string? UpdatedBy { get; set; }
 }
- 
+

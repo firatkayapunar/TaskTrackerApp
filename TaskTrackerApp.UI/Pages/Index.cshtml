@@ -1,0 +1,48 @@
+﻿@page
+@using ExpenseApp.UI.Pages
+@using TaskTrackerApp.UI.Constants
+@using TaskTrackerApp.UI.ViewModels.Enums
+@model IndexModel
+@{
+    ViewData["Title"] = "Ana Sayfa";
+
+    var isLoggedIn = ViewContext.HttpContext.Session.Keys.Contains(SessionKeys.JwtToken);
+    var roleValue = ViewContext.HttpContext.Session.GetString(SessionKeys.UserRole);
+    var isAdmin = Enum.TryParse<UserRole>(roleValue, out var parsedRole) && parsedRole == UserRole.Admin;
+}
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h1 class="display-4 text-primary fw-bold">Welcome to Task Tracker</h1>
+        <p class="lead text-muted">Manage your tasks, stay organized, and boost your productivity.</p>
+
+        <div class="mt-4">
+            @if (isLoggedIn)
+            {
+                <a asp-page="/TaskItems/List" class="btn btn-success btn-lg me-2">
+                    Go to Task List
+                </a>
+
+                @if (isAdmin)
+                {
+                    <a asp-page="/Auth/Register" class="btn btn-outline-secondary btn-lg me-2">
+                        Register
+                    </a>
+                }
+
+                <a asp-page="/Auth/Logout" class="btn btn-outline-danger btn-lg">
+                    Logout
+                </a>
+            }
+            else
+            {
+                <a asp-page="/Auth/Login" class="btn btn-primary btn-lg me-2">
+                    Login
+                </a>
+                <a asp-page="/Auth/Register" class="btn btn-outline-secondary btn-lg">
+                    Register
+                </a>
+            }
+        </div>
+    </div>
+</div>

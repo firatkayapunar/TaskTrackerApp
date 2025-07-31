@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TaskTrackerApp.Application.Repositories;
 using TaskTrackerApp.Domain.Entities;
-using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.Infrastructure.Persistence.Repositories;
 
@@ -25,19 +24,10 @@ public class TaskItemRepository : GenericRepository<TaskItem>, ITaskItemReposito
     {
         return await _context.TaskItems
         .AsNoTracking()
-            .Where(t => t.State == TaskItemState.Completed)
+            .Where(t => t.IsCompleted)
             .OrderByDescending(t => t.UpdatedAt ?? t.CreatedAt)
             .Take(10)
         .ToListAsync();
-    }
-
-    public async Task<List<TaskItem>> GetTasksByStateAsync(TaskItemState state)
-    {
-        return await _context.TaskItems
-            .AsNoTracking()
-            .Where(t => t.State == state)
-            .OrderByDescending(t => t.CreatedAt)
-            .ToListAsync();
     }
 
     public async Task<List<TaskItem>> GetTasksByUserIdAsync(Guid userId)
