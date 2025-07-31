@@ -1,0 +1,70 @@
+﻿@page
+@using TaskTrackerApp.UI.Constants
+@model TaskTrackerApp.UI.Pages.Auth.RegisterModel
+@{
+    ViewData["Title"] = "Register Page";
+}
+
+<div class="sidenav">
+    <div class="login-main-text">
+        <h2>Task Tracker App<br />Register</h2>
+        <p>You can sign up here or return to the login page.</p>
+    </div>
+</div>
+
+<div class="main">
+    <div class="col-md-6 col-sm-12">
+        <div class="login-form">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger small"></div>
+
+            @if (!string.IsNullOrWhiteSpace(TempData["ErrorMessage"]?.ToString()))
+            {
+                <script>
+                    toastr.error("@TempData["ErrorMessage"]");
+                </script>
+            }
+
+            @if (!string.IsNullOrWhiteSpace(TempData["SuccessMessage"]?.ToString()))
+            {
+                <script>
+                    toastr.success("@TempData["SuccessMessage"]");
+                </script>
+            }
+
+            <form method="post">
+                <div class="form-group">
+                    <label asp-for="FirstName"></label>
+                    <input asp-for="FirstName" class="form-control" />
+                    <span asp-validation-for="FirstName" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="LastName"></label>
+                    <input asp-for="LastName" class="form-control" />
+                    <span asp-validation-for="LastName" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" type="password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger small"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="RePassword"></label>
+                    <input asp-for="RePassword" type="password" class="form-control" />
+                    <span asp-validation-for="RePassword" class="text-danger small"></span>
+                </div>
+
+                <div class="d-flex gap-2 mt-3">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                    <a asp-page="/Auth/Login" class="btn btn-outline-secondary">Login</a>
+                    <a asp-page="/Index" class="btn btn-outline-warning">Home</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using TaskTrackerApp.Application.Common.Interfaces;
 using TaskTrackerApp.Application.Common.Results;
 using TaskTrackerApp.Application.CQRS.TaskItems.Commands.Request;
 using TaskTrackerApp.Application.CQRS.TaskItems.Commands.Response;
@@ -7,16 +8,11 @@ using TaskTrackerApp.Application.Repositories;
 
 namespace TaskTrackerApp.Application.CQRS.TaskItems.Handlers.CommandHandlers;
 
-public sealed class UpdateTaskItemCommandHandler : IRequestHandler<UpdateTaskItemCommandRequest, ServiceResult<UpdateTaskItemCommandResponse>>
+public sealed class UpdateTaskItemCommandHandler(ITaskItemRepository taskRepository, IMapper mapper, IUnitOfWork unitOfWork) : IRequestHandler<UpdateTaskItemCommandRequest, ServiceResult<UpdateTaskItemCommandResponse>>
 {
-    private readonly ITaskItemRepository _taskRepository;
-    private readonly IMapper _mapper;
-
-    public UpdateTaskItemCommandHandler(ITaskItemRepository taskRepository, IMapper mapper)
-    {
-        _taskRepository = taskRepository;
-        _mapper = mapper;
-    }
+    private readonly ITaskItemRepository _taskRepository = taskRepository;
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ServiceResult<UpdateTaskItemCommandResponse>> Handle(UpdateTaskItemCommandRequest request, CancellationToken cancellationToken)
     {
@@ -32,6 +28,7 @@ public sealed class UpdateTaskItemCommandHandler : IRequestHandler<UpdateTaskIte
         _mapper.Map(request, taskItem);
 
         _taskRepository.Update(taskItem);
+        await _unitOfWork.SaveChangeAsync();
 
         return ServiceResult<UpdateTaskItemCommandResponse>.Success(new UpdateTaskItemCommandResponse(true));
     }

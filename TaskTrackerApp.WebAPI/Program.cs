@@ -9,10 +9,8 @@ using TaskTrackerApp.WebAPI.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var jwtSettingsSection = builder.Configuration.GetSection("JwtSettings");
-builder.Services.Configure<JwtSettings>(jwtSettingsSection);
-
-var jwtSettings = jwtSettingsSection.Get<JwtSettings>()!;
+builder.Services.Configure<JwtSettings>(builder.Configuration.GetSection(nameof(JwtSettings)));
+var jwtSettings = builder.Configuration.GetSection(nameof(JwtSettings)).Get<JwtSettings>()!;
 
 builder.Services.AddAuthentication(options =>
 {
@@ -31,7 +29,7 @@ builder.Services.AddAuthentication(options =>
         ValidIssuer = jwtSettings.Issuer,
         ValidAudience = jwtSettings.Audience,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSettings.Secret)),
-        ClockSkew = TimeSpan.Zero
+        ClockSkew = TimeSpan.Zero,
     };
 });
 
@@ -46,6 +44,7 @@ builder.Services.AddControllers(options =>
 });
 
 builder.Services.AddEndpointsApiExplorer();
+
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -79,15 +78,19 @@ builder.Services.AddSwaggerGen(options =>
 });
 
 builder.Services.AddExceptionHandlers();
+
 builder.Services.AddInfrastructure(builder.Configuration);
+
 builder.Services.AddApplications();
 
 var app = builder.Build();
 
 app.UseExceptionHandler(_ => { });
+
 app.UseHttpsRedirection();
 
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllers();

@@ -4,7 +4,6 @@ public sealed record GetRecentlyCompletedTasksQueryResponse(
     Guid Id,
     string Title,
     string? Description,
-    string State,
-    DateTime CreatedAt,
-    DateTime? CompletedAt
+    DateTime? DueDate,
+    DateTime CreatedAt
 );

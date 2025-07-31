@@ -10,7 +10,9 @@ public class GenericRepository<T>(ApplicationDbContext appDbContext) : IGenericR
     protected readonly DbSet<T> _dbSet = appDbContext.Set<T>();
 
     public virtual IQueryable<T> GetAll() => _dbSet.AsNoTracking();
+
     public IQueryable<T> Where(Expression<Func<T, bool>> expression) => _dbSet.Where(expression).AsNoTracking();
+
     public ValueTask<T?> GetByIdAsync(Guid id) => _dbSet.FindAsync(id);
 
     public Task<bool> AnyAsync(Expression<Func<T, bool>> expression)

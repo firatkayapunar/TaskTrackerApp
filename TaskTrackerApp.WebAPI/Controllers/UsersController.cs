@@ -8,10 +8,12 @@ namespace TaskTrackerApp.WebAPI.Controllers;
 
 public class UsersController(IMediator mediator) : CustomBaseController
 {
-    [AllowAnonymous]
+    [Authorize(Roles = "Admin")]
     [HttpPost("register")]
     public async Task<IActionResult> RegisterAsync([FromBody] CreateUserCommandRequest request)
     {
+        var username = HttpContext.User.Identity?.Name;
+
         var result = await mediator.Send(request);
 
         var location = result.IsSuccess && result.Data is not null

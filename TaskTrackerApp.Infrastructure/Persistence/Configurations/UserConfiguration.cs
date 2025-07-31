@@ -15,17 +15,17 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Username)
             .IsRequired()
             .HasMaxLength(50)
-            .IsUnicode(true); // nvarchar(50)
+            .IsUnicode(true);
 
         builder.Property(x => x.Email)
             .IsRequired()
             .HasMaxLength(100)
-            .IsUnicode(false); 
+            .IsUnicode(false);
 
         builder.Property(x => x.PasswordHash)
             .IsRequired()
             .HasMaxLength(255)
-            .IsUnicode(false); 
+            .IsUnicode(false);
 
         builder.Property(x => x.CreatedAt)
             .IsRequired();

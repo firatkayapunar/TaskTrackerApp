@@ -6,25 +6,21 @@ using TaskTrackerApp.Application.Repositories;
 using TaskTrackerApp.CQRS.Users.Commands.Request;
 using TaskTrackerApp.CQRS.Users.Commands.Response;
 using TaskTrackerApp.Domain.Entities;
+using TaskTrackerApp.Domain.Enums;
 
 namespace TaskTrackerApp.CQRS.Users.Handlers.CommandHandlers;
 
-public sealed class CreateUserCommandHandler
-    : IRequestHandler<CreateUserCommandRequest, ServiceResult<CreateUserCommandResponse>>
+public sealed class CreateUserCommandHandler(
+    IUserRepository userRepository,
+    IMapper mapper,
+    IPasswordHasher passwordHasher,
+    IUnitOfWork unitOfWork)
+        : IRequestHandler<CreateUserCommandRequest, ServiceResult<CreateUserCommandResponse>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-    private readonly IPasswordHasher _passwordHasher;
-
-    public CreateUserCommandHandler(
-        IUserRepository userRepository,
-        IMapper mapper,
-        IPasswordHasher passwordHasher)
-    {
-        _userRepository = userRepository;
-        _mapper = mapper;
-        _passwordHasher = passwordHasher;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
+    private readonly IPasswordHasher _passwordHasher = passwordHasher;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ServiceResult<CreateUserCommandResponse>> Handle(
         CreateUserCommandRequest request,
@@ -34,6 +30,10 @@ public sealed class CreateUserCommandHandler
         if (emailTaken)
             return ServiceResult<CreateUserCommandResponse>.Fail(ResultCode.Conflict, "Email is already in use.");
 
+        var generatedUsername = $"{request.FirstName}.{request.LastName}"
+            .ToLowerInvariant()
+            .Replace(" ", "");
+
         var usernameTaken = await _userRepository.AnyAsync(u => u.Username == request.Username);
         if (usernameTaken)
             return ServiceResult<CreateUserCommandResponse>.Fail(ResultCode.Conflict, "Username is already taken.");
@@ -42,8 +42,11 @@ public sealed class CreateUserCommandHandler
 
         var user = _mapper.Map<User>(request);
         user.PasswordHash = hashedPassword;
+        user.Username = generatedUsername;
+        user.Role =  UserRole.User; 
 
         await _userRepository.AddAsync(user);
+        await _unitOfWork.SaveChangeAsync();
 
         var response = _mapper.Map<CreateUserCommandResponse>(user);
 

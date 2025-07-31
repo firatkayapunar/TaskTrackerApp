@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using TaskTrackerApp.Application.Common.Interfaces;
 using TaskTrackerApp.Application.Common.Results;
 using TaskTrackerApp.Application.Repositories;
 using TaskTrackerApp.CQRS.Users.Commands.Request;
@@ -7,17 +8,12 @@ using TaskTrackerApp.CQRS.Users.Commands.Response;
 
 namespace TaskTrackerApp.CQRS.Users.Handlers.CommandHandlers;
 
-public sealed class UpdateUserCommandHandler
-    : IRequestHandler<UpdateUserCommandRequest, ServiceResult<UpdateUserCommandResponse>>
+public sealed class UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper, IUnitOfWork unitOfWork)
+        : IRequestHandler<UpdateUserCommandRequest, ServiceResult<UpdateUserCommandResponse>>
 {
-    private readonly IUserRepository _userRepository;
-    private readonly IMapper _mapper;
-
-    public UpdateUserCommandHandler(IUserRepository userRepository, IMapper mapper)
-    {
-        _userRepository = userRepository;
-        _mapper = mapper;
-    }
+    private readonly IUserRepository _userRepository = userRepository;
+    private readonly IMapper _mapper = mapper;
+    private readonly IUnitOfWork _unitOfWork = unitOfWork;
 
     public async Task<ServiceResult<UpdateUserCommandResponse>> Handle(
         UpdateUserCommandRequest request,
@@ -41,7 +37,8 @@ public sealed class UpdateUserCommandHandler
         _mapper.Map(request, user);
 
         _userRepository.Update(user);
-
+        await _unitOfWork.SaveChangeAsync();
+        
         var response = _mapper.Map<UpdateUserCommandResponse>(user);
 
         return ServiceResult<UpdateUserCommandResponse>.Success(response);

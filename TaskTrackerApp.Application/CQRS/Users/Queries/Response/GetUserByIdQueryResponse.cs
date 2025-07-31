@@ -1,4 +1,6 @@
-﻿namespace TaskTrackerApp.CQRS.Users.Queries.Response;
+﻿using TaskTrackerApp.Domain.Enums;
+
+namespace TaskTrackerApp.CQRS.Users.Queries.Response;
 
 public sealed record GetUserByIdQueryResponse(
     Guid Id,
@@ -6,5 +8,6 @@ public sealed record GetUserByIdQueryResponse(
     string LastName,
     string Username,
     string Email,
-    string FullName
+    string FullName,
+    UserRole UserRole
 );

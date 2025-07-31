@@ -7,6 +7,5 @@ namespace TaskTrackerApp.Application.CQRS.TaskItems.Commands.Request;
 public sealed record CreateTaskItemCommandRequest(
     string Title,
     string? Description,
-    DateTime DueDate,
     Guid UserId
 ) : IRequest<ServiceResult<CreateTaskItemCommandResponse>>;
