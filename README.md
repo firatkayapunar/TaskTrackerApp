@@ -50,6 +50,12 @@ Kod yapısı, **Clean Architecture**, **CQRS**, **SOLID**, **Dependency Injectio
 <br>
  ✅ <strong>Bu adımları takip ederek veritabanınızı hazır hale getirebilirsiniz.</strong>
 
+<p>
+  <h3>Not:</h3>
+  Migration işlemleri yapılırken <strong>Package Manager Console</strong> ekranında <code>TaskTrackerApp.Infrastructure</code> projesi (katmanı) seçili olmalı, <strong>Startup Project</strong> ise <code>TaskTrackerApp.API</code> olarak ayarlanmalıdır. <br>
+  Proje çalıştırılırken ise <strong>Multiple Startup Projects</strong> ayarı kullanılarak <code>TaskTrackerApp.UI</code> ve <code>TaskTrackerApp.API</code> katmanları birlikte başlatılmalıdır.
+</p>
+
 ---
 
 <h2>📂 Proje Yapısı</h2>
